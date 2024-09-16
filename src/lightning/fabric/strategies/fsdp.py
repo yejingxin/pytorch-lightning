@@ -263,7 +263,7 @@ class FSDPStrategy(ParallelStrategy, _Sharded):
         self._setup_distributed()
         global_rank = self.cluster_environment.global_rank()
         world_size = self.cluster_environment.world_size()
-        if self.fsdp_size is not None or self.fsdp_size < world_size:
+        if self.fsdp_size is not None and self.fsdp_size < world_size:
             assert world_size % self.fsdp_size == 0
             from torch.distributed.fsdp.fully_sharded_data_parallel import ShardingStrategy
             self.sharding_strategy = ShardingStrategy.HYBRID_SHARD
